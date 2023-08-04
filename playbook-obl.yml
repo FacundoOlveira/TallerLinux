@@ -1,0 +1,11 @@
+---
+- hosts: redhat
+  become: yes
+  remote_user: sysadmin
+ 
+  task:
+          
+  - name: Update all available packegas
+    yum:
+      name: "*"
+      state: latest
