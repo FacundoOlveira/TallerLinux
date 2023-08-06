@@ -2,10 +2,7 @@
 - hosts: redhat
   become: yes
   remote_user: sysadmin
- 
-  task:
-          
-  - name: Update all available packegas
-    yum:
-      name: "*"
-      state: latest
+  become_method: sudo
+  tasks:
+    - name: install apache2
+      apt: name=apache2 update_cache=yes state=latest
