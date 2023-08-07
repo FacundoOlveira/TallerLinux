@@ -6,6 +6,8 @@
   tasks:
     - name: install apache2
       apt: name=apache2 update_cache=yes state=latest
+  http_port "80"
+  http_port "433"
 
 - hosts: Ubuntu
   become: yes
@@ -14,3 +16,4 @@
     - apt: name=mariadb-server state=lastest
     - name: install MariaDB Client
     - apt: name=mariadb-client state=lastest
+  http_port "3306"
