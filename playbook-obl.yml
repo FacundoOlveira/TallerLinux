@@ -1,7 +1,10 @@
 ---
 - hosts: Ubuntu
   become: yes
+  become_method: sudo
+  remote_user: sysadmin
   tasks:
+#Instalacion MariaBD
     - name: install MariaDB Server
     - apt: name=mariadb-server state=lastest
     - name: install MariaDB Client
@@ -13,13 +16,31 @@
   remote_user: sysadmin
   become_method: sudo
   tasks:
+#Instalacion Apache
     - name: install apache2
       apt: name=apache2 update_cache=yes state=latest
+#Instalacion nginx
     - name: install nginx
       apt: name=nginx state=latest
     - name: start nginx
       service:
           name: nginx
           state: started
+#Instalacion Tomcat
+    - name: Download Tomcat8 from tomcat.apache.org
+      hosts: testserver
+      vars:
+         download_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.83/bin/apache-tomcat-8.5.83.tar.gz
+
+    - name: Create a Directory /opt/tomcat8
+      become: yes
+      file:
+        path: /opt/tomcat8
+        state: directory
+        mode: 0755
+        owner: tomcat
+        group: tomcat
+
+#Puertos a habilitar
   http_port "80"
   http_port "433"
