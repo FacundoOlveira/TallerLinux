@@ -10,5 +10,7 @@
 - hosts: ubuntu
   become: yes
   tasks:
-    - name: install MariaDB
+    - name: install MariaDB Server
     - apt: name=mariadb-server state=lastest
+    - name: install MariaDB Client
+    - apt: name=mariadb-client state=lastest
