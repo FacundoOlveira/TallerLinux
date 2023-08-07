@@ -1,14 +1,4 @@
 ---
-- hosts: RedHat
-  become: yes
-  remote_user: sysadmin
-  become_method: sudo
-  tasks:
-    - name: install apache2
-      apt: name=apache2 update_cache=yes state=latest
-  http_port "80"
-  http_port "433"
-
 - hosts: Ubuntu
   become: yes
   tasks:
@@ -17,3 +7,19 @@
     - name: install MariaDB Client
     - apt: name=mariadb-client state=lastest
   http_port "3306"
+
+- hosts: RedHat
+  become: yes
+  remote_user: sysadmin
+  become_method: sudo
+  tasks:
+    - name: install apache2
+      apt: name=apache2 update_cache=yes state=latest
+    - name: install nginx
+      apt: name=nginx state=latest
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
+  http_port "80"
+  http_port "433"
